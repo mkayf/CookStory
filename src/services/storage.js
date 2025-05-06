@@ -22,7 +22,7 @@ class StorageService {
         catch(e){
             console.log('Appwrite service error :: createFile', e);
             return null;
-        }
+        } 
     }
 
     async deleteFile(fileId){
@@ -39,7 +39,7 @@ class StorageService {
         }
     }
 
-    async getFilePreview(fileId){
+    getFilePreview(fileId){
         try{
             return this.storage.getFileView(
                 config.appwriteBucketId,
@@ -52,3 +52,7 @@ class StorageService {
         }
     }
 }
+
+const storageService = new StorageService;
+
+export default storageService;

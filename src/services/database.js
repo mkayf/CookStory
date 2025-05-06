@@ -11,13 +11,13 @@ class DatabaseService {
         this.database = new Databases(this.client);
     }
 
-    async createPost({title, slug, content, status, featured_img, userId}){
+    async createPost({title, slug, content, status, featured_img, category, userId}){
         try{
             return await this.database.createDocument(
                 config.appwriteDatabaseId,
                 config.appwriteBlogCollectionId,
                 slug,
-                {title, slug, content, status, featured_img, userId}
+                {title, slug, content, status, featured_img, category, userId}
             )
         }
         catch(e){
@@ -52,15 +52,16 @@ class DatabaseService {
             console.log('Appwrite service error :: getPost', e);
             return null;
         }
-    }
+    } 
 
-    async updatePost({title, slug, content, status, featured_img}){
+    async updatePost(postId, {title, slug, content, status, featured_img, category}){
         try{
             return await this.database.updateDocument(
                 config.appwriteDatabaseId,
                 config.appwriteBlogCollectionId,
-                slug,
-                {title, slug, content, status, featured_img}
+                // slug for updating old post
+                postId,
+                {title, slug, content, status, featured_img, category}
             )
         }
         catch(e){
@@ -76,7 +77,7 @@ class DatabaseService {
                 config.appwriteBlogCollectionId,
                 slug
             );
-            return true;
+            return true; 
         }
         catch(e){
             console.log('Appwrite service error :: deletePost', e);
@@ -86,4 +87,4 @@ class DatabaseService {
 }
 
 const databaseService = new DatabaseService;
-export default databaseService;
+export default databaseService; 
