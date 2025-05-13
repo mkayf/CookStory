@@ -11,22 +11,22 @@ function Categories() {
     {
       name : 'Breakfast',
       image : BreakfastImg,
-      path: '/categories/breakfast'
+      path: '/category/breakfast'
     },
     {
       name : 'Lunch',
       image : LunchImg,
-      path: '/categories/lunch'
+      path: '/category/lunch'
     },
     {
       name : 'Dinner',
       image : DinnerImg,
-      path: '/categories/dinner'
+      path: '/category/dinner'
     },
     {
       name : 'Snacks',
       image : SnackImg,
-      path: '/categories/snacks'
+      path: '/category/snacks'
     }
   ];
 

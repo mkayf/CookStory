@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import databaseService from "../services/database";
 import storageService from "../services/storage";
+import { toast } from "react-toastify";
 
 function PostForm({ post }) {
+
   const {
     register,
     handleSubmit,
@@ -25,9 +27,11 @@ function PostForm({ post }) {
     },
   });
 
+
   const [publishLoader, setPublishLoader] = useState(false);
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+
 
   const publishPost = async (data) => {
     setPublishLoader(true);
@@ -53,11 +57,12 @@ function PostForm({ post }) {
       } else {
         const file = await storageService.uploadFile(data.featured_img[0]);
         if (file) {
-          const fileId = file.$id;
           const dbPost = await databaseService.createPost({
             ...data,
+            content : data.content.toString(),
             featured_img: file.$id,
             userId: userData.$id,
+            user_name: userData.name
           });
 
           if (dbPost) {
@@ -66,18 +71,22 @@ function PostForm({ post }) {
         }
       }
     } catch (e) {
+      toast("Couldn't publish due to technical error please try again or contact support.", {
+        type : 'error',
+        position : 'bottom-right'
+      })
       console.log(e);
     } finally {
       setPublishLoader(false);
     }
   };
 
-  const slugTransformation = (value) => {
+  const slugTransformation = useCallback((value) => {
     if (value && typeof value === "string") {
       return value.trim().toLowerCase().replace(/\s/g, "-");
     }
     return "";
-  };
+  }, []);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -189,7 +198,7 @@ function PostForm({ post }) {
           <Button
            type="submit"
            text={
-            publishLoader ? (<div className="w-4 h-5 sm:w-5 sm:h-4 border-2 border-gray-950 border-b-transparent rounded-full animate-spin"></div>) : 'Publish'
+            publishLoader ? (<div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-gray-950 border-b-transparent rounded-full animate-spin"></div>) : post ? 'Update' : 'Post'
            }
            disabled={
             publishLoader ? true : false

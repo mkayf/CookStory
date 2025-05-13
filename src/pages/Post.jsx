@@ -8,24 +8,32 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
 function Post() {
-  const { slug } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [loader, setLoader] = useState(false);
   const userData = useSelector((state) => state.auth.userData);
-
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
-    if (slug) {
-      databaseService.getPost(slug).then((post) => {
+    if (id) {
+      setLoader(true);
+      databaseService.getPost(id).then((post) => {
         if (post) setPost(post);
         else navigate("/");
-      });
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoader(false);
+      })
     } else {
       navigate("/");
     }
-  }, [slug, navigate]);
+  }, [id]);
+
 
   const deletePost = async () => {
     setDeleteLoading(true);
@@ -34,6 +42,10 @@ function Post() {
       if (status) {
         const deleteFile = await storageService.deleteFile(post.featured_img);
         if (deleteFile) {
+          toast("Post deleted successfully.", {
+            type: "success",
+            position: "bottom-right",
+          });
           navigate("/");
         } else {
           toast("Couldn't delete image file at the moment. Please try again.", {
@@ -54,17 +66,12 @@ function Post() {
     }
   };
 
+
+
   return post ? (
-    <Container className="my-6">
-      <div className="bg-white p-6 rounded-xl shadow-lg">
-        <div className="w-full h-70 md:w-[500px] my-4 ">
-          <img
-            src={storageService.getFilePreview(post.featured_img)}
-            className="w-full h-full rounded-xl"
-            alt={post.title}
-          />
-        </div>
-        {isAuthor && (
+    <Container className="my-6 ">
+      <div className="flex justify-end">
+      {isAuthor && (
           <div className="my-4 flex gap-4">
             <Button
               type="button"
@@ -78,7 +85,7 @@ function Post() {
                   <div className="w-4 h-4 sm:w-4 sm:h-4 border-2 border-gray-950 border-b-transparent rounded-full animate-spin"></div>
                 ) : 'Delete'
               }
-              className="!bg-[#E1C16E] hover:!bg-[#c3a75e]"
+              className="outline-2 outline-[#A8C66C] !bg-transparent"
               onClick={deletePost}
               disabled={
                 deleteLoading ? true : false
@@ -86,13 +93,29 @@ function Post() {
             />
           </div>
         )}
-        <hr />
+      </div>
+      <div className="flex justify-center">
+      <div className="w-[700px] pr-4">
+        <div className="w-full h-[400px] my-4">
+          <img
+            src={storageService.getFilePreview(post.featured_img)}
+            className="w-full h-full rounded-xl"
+            alt={post.title}
+          />
+        </div>
         <div className="my-4">
+          <p className="text-md poppins-regular">Author: <span className="italic">{post.user_name}</span></p>
+        </div>  
+        <div className="my-4 mt-8">
           <h2 className="poppins-semibold text-2xl md:text-3xl">
             {post.title}
           </h2>
         </div>
-        <div className="my-4">{parse(post.content)}</div>
+        
+        <div className="my-4">
+          <div className="poppins-regular">{parse(post.content)}</div>
+        </div>
+      </div>
       </div>
     </Container>
   ) : null;

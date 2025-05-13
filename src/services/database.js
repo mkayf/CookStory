@@ -11,13 +11,13 @@ class DatabaseService {
         this.database = new Databases(this.client);
     }
 
-    async createPost({title, slug, content, status, featured_img, category, userId}){
+    async createPost({title, slug, content, status, featured_img, category, userId, user_name}){
         try{
             return await this.database.createDocument(
                 config.appwriteDatabaseId,
                 config.appwriteBlogCollectionId,
-                slug,
-                {title, slug, content, status, featured_img, category, userId}
+                ID.unique(),
+                {title, slug, content, status, featured_img, category, userId, user_name}
             )
         }
         catch(e){
@@ -36,6 +36,20 @@ class DatabaseService {
         }
         catch(e){
             console.log('Appwrite service error :: getAllPosts', e);
+            return null;
+        }
+    }
+
+    async getFeaturedPosts(queries = [Query.limit(8)]){
+        try{
+            return await this.database.listDocuments(
+                config.appwriteDatabaseId,
+                config.appwriteBlogCollectionId,
+                queries
+            )            
+        }
+        catch(e){
+            console.log('Appwrite service error :: getFeaturedPosts', e);
             return null;
         }
     }
@@ -82,6 +96,20 @@ class DatabaseService {
         catch(e){
             console.log('Appwrite service error :: deletePost', e);
             return false;
+        }
+    }
+
+    async getPostsByCategory(category = 'breakfast'){
+        try{
+            return await this.database.listDocuments(
+                config.appwriteDatabaseId,
+                config.appwriteBlogCollectionId,
+                [Query.equal('category', category)]
+            )
+        }
+        catch(e){
+             console.log('Appwrite service error :: getPostsByCategory', e);
+            return null;
         }
     }
 }

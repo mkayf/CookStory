@@ -16,18 +16,13 @@ function Header() {
     },
     {
       name: "Posts",
-      URL: "/allposts",
+      URL: "/posts",
       status: true,
     },
     {
       name: "Add post",
       URL: "/addpost",
       status: authStatus,
-    },
-    {
-      name: "About",
-      URL: "/about",
-      status: true,
     },
     {
       name: "Signup",
