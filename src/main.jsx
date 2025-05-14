@@ -14,6 +14,7 @@ import Allposts from './pages/Allposts.jsx'
 import Notfound from './pages/Notfound.jsx'
 import Editpost from './pages/Editpost.jsx'
 import Category from './pages/Category.jsx'
+import {AuthLayout} from './components/index.js'
 
 const router = createBrowserRouter([
     {
@@ -27,15 +28,27 @@ const router = createBrowserRouter([
             },
             {
                 path : 'signup',
-                element : <Signup />
+                element : (
+                    <AuthLayout authentication={false}>
+                        <Signup />
+                    </AuthLayout>
+                )
             },
             {
                 path : 'login',
-                element : <Login />
+                element : (
+                    <AuthLayout authentication={false}>
+                        <Login />
+                    </AuthLayout>
+                )
             },
             {
                 path : 'addpost',
-                element : <Addpost />
+                element : (
+                    <AuthLayout authentication={true}>
+                        <Addpost />
+                    </AuthLayout>
+                )
             },
             {
                 path : 'post/:id',
@@ -47,7 +60,11 @@ const router = createBrowserRouter([
             },
             {
                 path : 'editpost/:id',
-                element : <Editpost />
+                element : (
+                    <AuthLayout authentication={true}>
+                        <Editpost />
+                    </AuthLayout>
+                )
             },
             {
                 path : 'category',

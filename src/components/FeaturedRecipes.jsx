@@ -54,7 +54,7 @@ function FeaturedRecipes() {
             
             <div className='flex justify-center'>
                 {
-                    posts.length !== 0 && <Link to="/allposts">
+                    posts.length !== 0 && <Link to="/posts">
                     <Button text='View more' className='mt-16 ' icon={<FaArrowRight />} />
                 </Link>
                 }

@@ -18,7 +18,7 @@ function PostCard({post}) {
         />
       </div>
       <div className="">
-        <p className="poppins-semibold">{post?.title}</p>
+        <p className="poppins-semibold">{post?.title.slice(0, 60)}...</p>
       </div>
       <button onClick={() => navigate(`/post/${id}`)} className=" bg-[#A8C66C] poppins-regular text-sm p-2 px-4 rounded-lg hover:bg-[#8ea75d] transition-colors cursor-pointer">
         View Recipe

@@ -15,6 +15,7 @@ import Input from "./Input";
 import PostForm from "./PostForm";
 import Select from './Select';
 import RTE from "./RTE";
+import AuthLayout from "./AuthLayout";
 
 export {
     Container,
@@ -33,5 +34,6 @@ export {
     Input,
     PostForm,
     Select,
-    RTE
+    RTE,
+    AuthLayout
 }

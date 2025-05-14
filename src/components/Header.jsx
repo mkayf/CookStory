@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Logo, LoginBtn, LogoutBtn } from "./index";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Header() {
@@ -35,7 +35,9 @@ function Header() {
     <header className="">
       <nav className="relative flex justify-between items-center px-4 md:px-12 py-4 bg-[#012f22]">
         <div>
-          <Logo className="h-[45px] md:h-[60px]" />
+          <Link to="/">
+            <Logo className="h-[45px] md:h-[60px]" />
+          </Link>
         </div>
         <div className="hidden md:block">
           <ul className="flex items-center justify-center gap-6 text-white poppins-regular">

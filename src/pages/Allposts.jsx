@@ -47,9 +47,8 @@ function Allposts() {
       :
       (
         <div>
-          <h1 className='poppins-semibold text-md md:text-3xl'>Explore blogs</h1>
-          <div className='mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-10 justify-items-center'>
-          
+          <h1 className='poppins-semibold text-md md:text-3xl'>Explore recipes</h1>
+          <div className='my-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-10 justify-items-center'>
           {
             posts.map((post, i) => (
               <PostCard key={i} post={post} />
