@@ -59,6 +59,7 @@ function Login() {
         <div className="mt-6">
           <form onSubmit={handleSubmit(loginUser)}>
             <Input
+              type="email"
               label="Email"
               {...register("email", {
                 required: "Email is required.",
@@ -75,6 +76,7 @@ function Login() {
               <small className="text-red-500">{errors.email.message}</small>
             )}
             <Input
+              type="password"
               label="Password"
               {...register("password", {
                 required: "Password is required.",

@@ -75,6 +75,7 @@ function Signup() {
               <small className="text-red-500">{errors.name.message}</small>
             )}
             <Input
+              type="email"
               label="Email"
               {...register("email", {
                 required: "Email is required.",
@@ -91,6 +92,7 @@ function Signup() {
               <small className="text-red-500">{errors.email.message}</small>
             )}
             <Input
+              type="password"
               label="Password"
               {...register("password", {
                 required: "Password is required.",
