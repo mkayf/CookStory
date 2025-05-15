@@ -95,7 +95,7 @@ function Post() {
         )}
       </div>
       <div className="flex justify-center">
-      <div className="w-[700px] pr-4">
+      <div className="w-[700px] lg:pr-4">
         <div className="w-full h-[400px] my-4">
           <img
             src={storageService.getFilePreview(post.featured_img)}
