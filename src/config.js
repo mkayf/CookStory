@@ -6,5 +6,5 @@ const config = {
     appwriteBucketId : String(import.meta.env.VITE_APPWRITE_BUCKET_ID),
     tinyMCEAPIKey : String(import.meta.env.VITE_TINYMCE_API_KEY)
 }
-
+ 
 export default config;
